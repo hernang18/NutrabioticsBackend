@@ -17,6 +17,7 @@
         [Display(Name = "OrderNum Epicor")]
         public int OrderNum { get; set; }  //Epicor
 
+        [Display(Name = "Usuario Id")]
         [Editable(false)]
         public int UserId { get; set; }
 
@@ -26,6 +27,7 @@
         [Display(Name = "Cliente")]
         public int CustomerId { get; set; }
 
+        [Display(Name = "Cliente Id")]
         public string CustId { get; set; }
 
         [Editable(false)]
@@ -33,9 +35,11 @@
         public bool CreditHold { get; set; }
 
         [Display(Name = "Fecha Orden")]
+        [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
         [Display(Name = "Fecha Necesidad")]
+        [DataType(DataType.DateTime)]
         public DateTime NeedByDate { get; set; }
 
         [Editable(false)]
@@ -48,15 +52,19 @@
         [Display(Name = "Contacto")]
         public int ContactId { get; set; }
 
+        [Display(Name = "Numero Contacto")]
         public int ConNum { get; set; }   //Epicor       
 
         public string SalesCategory { get; set; }
 
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Observaciones")]
         public string Observations { get; set; }
 
         [Display(Name = "Impuesto")]
-        public decimal TaxAmt { get; set; }      
+        public decimal TaxAmt { get; set; }
+
+        public decimal Total { get { return OrderDetails == null ? 0 : OrderDetails.Sum(d => d.Total); } }
 
         [Display(Name = "Sincronizado Epicor")]
         public bool SincronizadoEpicor { get; set; }
@@ -65,8 +73,12 @@
 
         public string RowMod { get; set; }  //D:DElete U:Update C:Create
 
-        public List<OrderDetail> Details { get; set; }
+        public string Platform { get; set; }
 
-        public decimal Total { get { return Details == null ? 0 : Details.Sum(d => d.Total); } }
+        public int PriceListId { get; set; }
+
+        public List<OrderDetail> OrderDetails { get; set; }
+
+      
     }
 }

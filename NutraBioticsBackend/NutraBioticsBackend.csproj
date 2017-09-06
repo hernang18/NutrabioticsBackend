@@ -230,8 +230,10 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddproductView.cs" />
     <Compile Include="Models\Calendar.cs" />
     <Compile Include="Models\CashHeader.cs" />
+    <Compile Include="Models\CombosHelper.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\ContactsGetRequest.cs" />
@@ -379,6 +381,7 @@
     <Content Include="Views\Customers\CreateContact.cshtml" />
     <Content Include="Views\Customers\DeleteContact.cshtml" />
     <Content Include="Views\Customers\EditContact.cshtml" />
+    <Content Include="Views\OrderHeaders\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

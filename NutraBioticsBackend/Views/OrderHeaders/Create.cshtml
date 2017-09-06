@@ -1,4 +1,4 @@
-﻿@model NutraBioticsBackend.Models.OrderHeader
+﻿@model NutraBioticsBackend.Models.NewOrderView
 
 @{
     ViewBag.Title = "Create";
@@ -75,6 +75,14 @@
                     @Html.ValidationMessageFor(model => model.TermsCode, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PriceListId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
+                </div>
+            </div>
            
     </div>
         <div class="col-md-6">
@@ -130,27 +138,46 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-                @Html.ActionLink("Agregar Producto", "AddProduct", new { }, new { @class = "btn btn-warning" })
+                <input type="submit" value="Create" class="btn btn-default" />                
+                @Html.ActionLink("Agregar Producto", "AddProduct", "OrderHeaders", null, new { @id = "SubmitName", @class = "btn btn-warning" })
             </div>
         </div>
     </div>
 }
+<!-- En la vista en lugar del ActionLink un <a /> normal -->
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<h4>Detalle Orden</h4>
+@if(Model.OrderDetails==null)
+{
+    <h5>La orden no tiene detalle</h5>
+}
+else
+{
+    <h5>La orden tiene detalle</h5>
+}
+
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
+     $('#SubmitName').click(function () {
+            var CustomerId = $('#CustomerId').val();
+            var path = '@Url.Content("~/OrderHeaders/AddProduct")' + "?CustomerId=" + CustomerId
+            $(this).attr("href", path);
+        });
         $(document).ready(
+
             function ()
             {
+
                 $("#CustomerId").change(function ()
                 {
                             $("#ShipToId").empty();
                             $("#ContactId").empty();
+                            $("#PriceListId").empty();
                             $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("GetShipToesList")',
@@ -193,6 +220,22 @@
                                         + contact.Name + '</option>');
                                 });
                                 },
+                            });
+                               $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetPriceList")',
+                                dataType: 'json',
+                                data: { CustomerId: $("#CustomerId").val() },
+                                success: function (PriceList) {
+                                    $.each(PriceList, function (i, priceList) {
+                                        $("#PriceListId").append('<option value="'
+                                            + priceList.PriceListId + '">'
+                                            + priceList.ListDescription + '</option>');
+                                    });
+                                },
+                                error: function (ex) {
+                                    alert('El cliente no tiene shipto Asociado');
+                                }
                             });
                             return false;
                 })

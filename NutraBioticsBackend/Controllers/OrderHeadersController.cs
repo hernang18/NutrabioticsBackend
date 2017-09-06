@@ -20,6 +20,16 @@ namespace NutraBioticsBackend.Controllers
             var orderHeaders = db.OrderHeaders.Include(o => o.Contact).Include(o => o.Customer).Include(o => o.ShipTo).Include(o => o.User);
             return View(orderHeaders.ToList());
         }
+        
+        public ActionResult AddProduct(int CustomerId)
+        {
+            if (CustomerId != 0)
+                CustomerId = 9;
+            //var CustomerPriceList = db.CustomerPriceLists.Where(c => c.CustomerId == CustomerID).OrderBy(c => c.CustomerId).ToList();
+            ViewBag.PartId = new SelectList(CombosHelper.GetPriceListPart(CustomerId), "PartId", "PartDescription");
+            //ViewBag.PriceListPartId=
+            return View();
+        }
 
         // GET: OrderHeaders/Details/5
         public ActionResult Details(int? id)
@@ -39,15 +49,18 @@ namespace NutraBioticsBackend.Controllers
         // GET: OrderHeaders/Create
         public ActionResult Create()
         {
-            ViewBag.CustomerId = new SelectList(db.Customers.Where(c => c.VendorId == 74).OrderBy(c => c.Names), "CustomerId", "Names");
+            ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomer(74), "CustomerId", "Names");
             ViewBag.ShipToId = new SelectList(db.ShipToes.Where(c => c.VendorId == 74 && c.CustomerId==db.Customers.FirstOrDefault().CustomerId).OrderBy(c => c.ShipToName), "ShipToId", "ShipToName");
             ViewBag.ContactId = new SelectList(db.Contacts.Where(c => c.VendorId == 74 && c.ShipToId==db.ShipToes.FirstOrDefault().ShipToId).OrderBy(c=>c.Name), "ContactId", "Name");
-           
+            ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");
+            var view = new NewOrderView
+            {
+                Date = DateTime.Now,
+                NeedByDate = DateTime.Now
+            };
             
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName");
-            return View();
-                
-           
+            return View(view);  
         }
 
         // POST: OrderHeaders/Create
@@ -164,6 +177,18 @@ namespace NutraBioticsBackend.Controllers
             var customers = db.Customers.Where(c => c.CustomerId == CustomerId);
             return Json(customers);
         }
+        public JsonResult GetPriceList(int customerId)
+        {
+            var customerpricelist = db.CustomerPriceLists.Where(c => c.CustomerId == customerId);
+            var pricelist = from item in db.PriceLists
+                            join item2 in customerpricelist on item.PriceListId equals item2.PriceListId
+                            select item;
+                 
+            db.Configuration.ProxyCreationEnabled = false;
+            return Json(pricelist);
+        }
+       
+
 
         #endregion
 
