@@ -24,12 +24,16 @@ namespace NutraBioticsBackend.Models
 
         public string ShipViaCode { get; set; }
 
+        [Display(Name = "Pais")]
         public string Country { get; set; }
 
+        [Display(Name = "Departamento")]
         public string State { get; set; }
 
+        [Display(Name = "Ciudad")]
         public string City { get; set; }
 
+        [Display(Name = "Direccion")]
         public string Address { get; set; }
 
         public string PhoneNum { get; set; }

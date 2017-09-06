@@ -22,10 +22,15 @@
 
         public string TerritoryEpicorId { get; set; }
 
+        public int CountryId { get; set; }
+
+        [Display(Name = "Pais")]
         public string Country { get; set; }
 
+        [Display(Name = "Departamento")]
         public string State { get; set; }
 
+        [Display(Name = "Ciudad")]
         public string City { get; set; }
 
         public string Address { get; set; }

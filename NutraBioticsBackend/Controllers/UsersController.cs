@@ -20,7 +20,7 @@ namespace NutraBioticsBackend.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var users = db.Users.Include(u => u.Company).Include(u => u.Country).Include(u => u.Plant).Include(u => u.Vendor);
+            var users = db.Users.Include(u => u.Company).Include(u => u.CountryId).Include(u => u.Plant).Include(u => u.Vendor);
             return View(await users.ToListAsync());
         }
 
