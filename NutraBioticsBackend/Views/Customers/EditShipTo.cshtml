@@ -1,0 +1,249 @@
+﻿@model NutraBioticsBackend.Models.ShipToView
+
+@{
+    ViewBag.Title = "EditShipTo";
+}
+
+<h2>EditShipTo</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ShipTo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ShipToId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShipToNum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShipToNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipToNum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustNum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CustNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CustNum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShipToName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShipToName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShipToName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TerritoryEpicorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TerritoryEpicorId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TerritoryEpicorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VendorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VendorId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SincronizadoEpicor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.SincronizadoEpicor)
+                    @Html.ValidationMessageFor(model => model.SincronizadoEpicor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+
+        <h3>Contactos</h3>
+
+
+        @Html.ActionLink("Crear Contacto", "CreateContact",
+                        new { Id = Model.CustomerId }, new { @class = "btn btn-warning" })
+
+        @if (Model.Contacts.Count > 0)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Contacts[0].ShipToNum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Contacts[0].Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Contacts[0].Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Contacts[0].City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => Model.Contacts[0].Address)
+                    </th>
+                    <th></th>
+                </tr>
+                @for (int i = 0; i < Model.Contacts.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].ShipToNum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Contacts[i].Address)
+                        </td>
+                        <td>
+
+
+                            @Html.ActionLink("Editar", "EditContact",
+                        new { id = Model.Contacts[i].ContactId }, new { @class = "btn btn-warning" })
+
+                            @Html.ActionLink("Borrar", "DeleteContact",
+                        new { id = Model.Contacts[i].ContactId },
+                        new { onclick = "return confirm('¿Esta segur@ de eliminar este registro?');", @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        }
+        else
+        {
+            <h4>No se encontraron contactos</h4>
+        }
+
+    </div>
+
+
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Details" + "/" + Model.CustomerId)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(
+            function ()
+            {
+                $("#ShipToId").change(function ()
+                {
+                            $("#ShipToNum").empty();
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetShipToList")',
+                                dataType: 'json',
+                                data: { CustomerId: $("#CustomerId").val() },
+                                success: function (shiptoes) {
+                                    $.each(shiptoes, function (i, customer) {
+                                        $("#ShipToNum").attr("value", customer.ShipToNum);
+                                        $("#Company").attr('value', customer.Company);
+                                        $("#VendorId").attr('value', customer.VendorId);
+                                    });
+                                },
+                            });
+                            return false;
+                })
+            }
+        );
+    </script>
+
+}

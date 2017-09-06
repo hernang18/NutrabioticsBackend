@@ -1,0 +1,117 @@
+﻿@model IEnumerable<NutraBioticsBackend.Models.OrderHeader>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Orden", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Names)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.ShipTo.ShipToNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShipTo.ShipToName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact.ConNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NeedByDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TermsCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observations)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxAmt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SincronizadoEpicor)
+        </th>      
+        <th>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Names)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShipTo.ShipToNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShipTo.ShipToName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact.ConNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NeedByDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TermsCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Observations)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TaxAmt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SincronizadoEpicor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SalesOrderHeaderId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SalesOrderHeaderId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SalesOrderHeaderId })
+        </td>
+    </tr>
+}
+
+</table>

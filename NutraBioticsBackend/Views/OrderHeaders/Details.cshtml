@@ -1,0 +1,178 @@
+﻿@model NutraBioticsBackend.Models.OrderHeader
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderHeader</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact.ShipToNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact.ShipToNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipTo.ShipToNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipTo.ShipToNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SalesOrderHeaderInterId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SalesOrderHeaderInterId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VendorId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VendorId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditHold)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditHold)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NeedByDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NeedByDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TermsCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TermsCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SalesCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SalesCategory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SincronizadoEpicor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SincronizadoEpicor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipToNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipToNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RowMod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RowMod)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SalesOrderHeaderId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
