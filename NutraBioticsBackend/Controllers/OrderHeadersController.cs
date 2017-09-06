@@ -18,15 +18,45 @@ namespace NutraBioticsBackend.Controllers
         public ActionResult Index()
         {
             var orderHeaders = db.OrderHeaders.Include(o => o.Contact).Include(o => o.Customer).Include(o => o.ShipTo).Include(o => o.User);
+
             return View(orderHeaders.ToList());
         }
-        
-        public ActionResult AddProduct(int CustomerId)
+
+        [HttpPost]
+        public ActionResult AddProduct(AddproductView view)
         {
-            if (CustomerId != 0)
-                CustomerId = 9;
+            if(ModelState.IsValid)
+            {
+                var priceListParts = db.PriceListParts.Where(p => p.PriceListId == view.PriceListId && p.PartId == view.PartId).FirstOrDefault();
+                var part = db.Parts.Find(view.PartId);
+                var orderDetailTmp = new OrderDetailTmp
+                {
+
+                    OrderQty = view.OrderQty,       
+                    PartId = view.PartId,
+                    PartNum = part.PartNum,
+                    PriceListPartId = priceListParts.PriceListPartId,
+                    Reference = view.Reference,
+                    TaxAmt = 0,
+                    Total = view.OrderQty * view.UnitPrice,
+                    UnitPrice=view.UnitPrice
+                };
+                db.OrderDetailTmp.Add(orderDetailTmp);
+                db.SaveChanges();
+                return RedirectToAction("Create");
+
+            }
+            ViewBag.PriceListId = new SelectList(db.PriceLists.Where(p => p.PriceListId == view.PriceListId), "PriceListId", "ListDescription");
+            ViewBag.PartId = new SelectList(CombosHelper.GetPriceListPart(view.PriceListId), "PartId", "PartDescription");
+            return View(view);
+        }
+
+            public ActionResult AddProduct(int PriceListId)
+        {
+
             //var CustomerPriceList = db.CustomerPriceLists.Where(c => c.CustomerId == CustomerID).OrderBy(c => c.CustomerId).ToList();
-            ViewBag.PartId = new SelectList(CombosHelper.GetPriceListPart(CustomerId), "PartId", "PartDescription");
+            ViewBag.PriceListId = new SelectList(db.PriceLists.Where(p=>p.PriceListId== PriceListId), "PriceListId", "ListDescription");
+            ViewBag.PartId = new SelectList(CombosHelper.GetPriceListPart(PriceListId), "PartId", "PartDescription");
             //ViewBag.PriceListPartId=
             return View();
         }
@@ -52,7 +82,7 @@ namespace NutraBioticsBackend.Controllers
             ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomer(74), "CustomerId", "Names");
             ViewBag.ShipToId = new SelectList(db.ShipToes.Where(c => c.VendorId == 74 && c.CustomerId==db.Customers.FirstOrDefault().CustomerId).OrderBy(c => c.ShipToName), "ShipToId", "ShipToName");
             ViewBag.ContactId = new SelectList(db.Contacts.Where(c => c.VendorId == 74 && c.ShipToId==db.ShipToes.FirstOrDefault().ShipToId).OrderBy(c=>c.Name), "ContactId", "Name");
-            ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");
+            ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");            
             var view = new NewOrderView
             {
                 Date = DateTime.Now,
@@ -60,6 +90,7 @@ namespace NutraBioticsBackend.Controllers
             };
             
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName");
+            view.OrderDetails = db.OrderDetailTmp.ToList();
             return View(view);  
         }
 
@@ -187,7 +218,14 @@ namespace NutraBioticsBackend.Controllers
             db.Configuration.ProxyCreationEnabled = false;
             return Json(pricelist);
         }
-       
+        public JsonResult GetProductPrice(int PriceListId,int PartId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            var pricelist = db.PriceListParts.Where(p => p.PriceListId == PriceListId && p.PartId==PartId);
+            return Json(pricelist);
+        }
+        
+
 
 
         #endregion

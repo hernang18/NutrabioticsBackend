@@ -8,12 +8,16 @@ namespace NutraBioticsBackend.Models
 {
     public class AddproductView
     {
+        public int PriceListId { get; set; }
 
         [Display(Name = "ParteId")]
         public int PartId { get; set; }
 
         [Display(Name = "Cantidad")]
         public decimal OrderQty { get; set; }
+
+        [Display(Name = "Referencia")]
+        public decimal Reference { get; set; }
 
         [Display(Name = "Precio Unitario")]
         [DataType(DataType.Currency)]

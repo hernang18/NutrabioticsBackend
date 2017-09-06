@@ -223,6 +223,7 @@
     <Compile Include="Controllers\InvoiceHeadersController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderDetailsController.cs" />
+    <Compile Include="Controllers\OrderDetailTmpsController.cs" />
     <Compile Include="Controllers\OrderHeadersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +250,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NewOrderView.cs" />
     <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\OrderDetailTmp.cs" />
     <Compile Include="Models\OrderHeader.cs" />
     <Compile Include="Models\OrderHeaderSync.cs" />
     <Compile Include="Models\OrderSyncPhone.cs" />
@@ -382,6 +384,11 @@
     <Content Include="Views\Customers\DeleteContact.cshtml" />
     <Content Include="Views\Customers\EditContact.cshtml" />
     <Content Include="Views\OrderHeaders\AddProduct.cshtml" />
+    <Content Include="Views\OrderDetailTmps\Create.cshtml" />
+    <Content Include="Views\OrderDetailTmps\Delete.cshtml" />
+    <Content Include="Views\OrderDetailTmps\Details.cshtml" />
+    <Content Include="Views\OrderDetailTmps\Edit.cshtml" />
+    <Content Include="Views\OrderDetailTmps\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

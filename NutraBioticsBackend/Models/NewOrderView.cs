@@ -77,7 +77,7 @@
 
         public int PriceListId { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderDetailTmp> OrderDetails { get; set; }
 
       
     }

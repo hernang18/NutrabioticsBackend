@@ -1,0 +1,75 @@
+﻿@model IEnumerable<NutraBioticsBackend.Models.OrderDetailTmp>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceListPartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reference)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderQty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaxAmt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PriceListPartId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reference)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderQty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TaxAmt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderDetailTmpId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailTmpId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailTmpId })
+        </td>
+    </tr>
+}
+
+</table>

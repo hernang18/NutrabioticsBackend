@@ -1,0 +1,82 @@
+﻿@model NutraBioticsBackend.Models.OrderDetailTmp
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OrderDetailTmp</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceListPartId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceListPartId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderQty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderQty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderDetailTmpId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
