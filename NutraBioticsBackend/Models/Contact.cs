@@ -6,6 +6,8 @@
 
     public class Contact
     {
+
+        //fh
         [Key]
         public int ContactId { get; set; }
 
