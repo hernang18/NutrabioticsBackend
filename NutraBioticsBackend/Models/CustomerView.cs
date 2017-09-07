@@ -10,6 +10,7 @@ namespace NutraBioticsBackend.Models
     public class CustomerView
     {
         [Key]
+        [Display(Name = "Cliente")]
         public int CustomerId { get; set; }
 
         public string CustId { get; set; }   //epicor

@@ -9,15 +9,13 @@
         [Key]
         public int ShipToId { get; set; }
 
-        [Editable(false)]
+        [Display(Name = "Cliente")]
         public int CustomerId { get; set; }
 
         public string ShipToNum { get; set; }  //Epicor
 
-
         [Editable(false)]
         public int CustNum { get; set; } //epicor
-
 
         [Display(Name = "Compañia")]
         public string Company { get; set; }
@@ -25,8 +23,11 @@
         [Display(Name = "Nombre Sucursal")]
         public string ShipToName { get; set; }
 
+
+        [Display(Name = "Territorio")]
         public string TerritoryEpicorId { get; set; }
 
+        [Display(Name = "Pais")]
         public int CountryId { get; set; }
 
         [Display(Name = "Pais")]

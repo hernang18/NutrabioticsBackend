@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @disabled = "disabled", @class = "form-control"})
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,26 +28,26 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ShipToNum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ShipToNum, new { htmlAttributes = new {@disabled = "disabled", @class = "form-control" } })
+                @Html.EditorFor(model => model.ShipToNum, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ShipToNum, "", new {  @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.CustNum, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CustNum, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control" } })
+                @Html.EditorFor(model => model.CustNum, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CustNum, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ShipToName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -132,7 +132,7 @@
             </div>
         </div>*@
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.SincronizadoEpicor, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -140,7 +140,7 @@
                     @Html.ValidationMessageFor(model => model.SincronizadoEpicor, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -156,15 +156,15 @@
 
 
         @Html.ActionLink("Crear Contacto", "CreateContact",
-                        new { Id = Model.CustomerId }, new { @class = "btn btn-warning" })
+                        new { Id = Model.ShipToId }, new { @class = "btn btn-warning" })
 
         @if (Model.Contacts.Count > 0)
         {
             <table class="table">
                 <tr>
-                    <th>
+                    @*<th>
                         @Html.DisplayNameFor(model => Model.Contacts[0].ShipToNum)
-                    </th>
+                    </th>*@
                     <th>
                         @Html.DisplayNameFor(model => Model.Contacts[0].Name)
                     </th>
@@ -185,9 +185,9 @@
                 @for (int i = 0; i < Model.Contacts.Count; i++)
                 {
                     <tr>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => Model.Contacts[i].ShipToNum)
-                        </td>
+                        </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => Model.Contacts[i].Name)
                         </td>
@@ -204,6 +204,11 @@
                             @Html.DisplayFor(modelItem => Model.Contacts[i].Address)
                         </td>
                         <td>
+
+
+                            <div class="cart">
+                                @Ajax.ActionLink("Add To Cart", "EditShipTo", new { shipTo = Model }, new AjaxOptions() { HttpMethod = "Post" });
+                            </div>
 
 
                             @Html.ActionLink("Editar", "EditContact",
@@ -233,32 +238,13 @@
 }
 
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(document).ready(
-            function ()
-            {
-                $("#ShipToId").change(function ()
-                {
-                            $("#ShipToNum").empty();
-                            $.ajax({
-                                type: 'POST',
-                                url: '@Url.Action("GetShipToList")',
-                                dataType: 'json',
-                                data: { CustomerId: $("#CustomerId").val() },
-                                success: function (shiptoes) {
-                                    $.each(shiptoes, function (i, customer) {
-                                        $("#ShipToNum").attr("value", customer.ShipToNum);
-                                        $("#Company").attr('value', customer.Company);
-                                    });
-                                },
-                            });
-                            return false;
-                })
-            }
-        );
-    </script>
+            function () {
+                    $("#ShipToNum").prop('disabled', true);
+                );}
+    </script>*@
 
 }

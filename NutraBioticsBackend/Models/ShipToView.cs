@@ -11,13 +11,13 @@ namespace NutraBioticsBackend.Models
         [Key]
         public int ShipToId { get; set; }
 
+        [Display(Name = "Cliente")]
         public int CustomerId { get; set; }
 
         [Display(Name = "ShipToNum")]
         public string ShipToNum { get; set; }  //Epicor
 
         public int CustNum { get; set; } //Epicor
-
 
         [Display(Name = "Compañia")]
         public string Company { get; set; }

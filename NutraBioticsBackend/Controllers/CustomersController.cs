@@ -29,6 +29,11 @@ namespace NutraBioticsBackend.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            if (TempData["CustomError"] != null)
+            {
+                ModelState.AddModelError(string.Empty, TempData["CustomError"].ToString());
+            }
+
             var customer = db.Customers.Find(id);
 
             if (customer == null)
@@ -40,6 +45,7 @@ namespace NutraBioticsBackend.Controllers
             {
                 CustomerId = customer.CustomerId,
                 Terms = customer.Terms,
+                TermsCode = customer.TermsCode,
                 CustId = customer.CustId,
                 Company = customer.Company,
                 Address = customer.Address,
@@ -143,7 +149,14 @@ namespace NutraBioticsBackend.Controllers
         {
             Customer customer = db.Customers.Find(id);
             db.Customers.Remove(customer);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+
+            }
             return RedirectToAction("Index");
         }
 
@@ -181,20 +194,9 @@ namespace NutraBioticsBackend.Controllers
 
         public ActionResult CreateShipTo(int id)
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", id);
+            ViewBag.CustomerId = new SelectList(db.Customers.Where(c=> c.VendorId == 74), "CustomerId", "Names", id);
             ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description");
             ViewBag.TerritoryEpicorId = new SelectList(CombosHelper.GetTerritory(), "TerritoryEpicorId", "TerritoryDesc");
-
-            var customerdata = db.Customers.Find(id);
-
-            //var infocustomer = new ShipTo
-            //{
-            //    CustNum = customerdata.CustNum,
-            //    Company = customerdata.Company,
-            //    Country = customerdata.Country,
-            //    State = customerdata.State,
-            //    City = customerdata.City,
-            //};
 
             return View();
         }
@@ -204,8 +206,7 @@ namespace NutraBioticsBackend.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult CreateShipTo([Bind(Include = "ShipToId,CustomerId,ShipToNum,CustNum,Company,ShipToName,TerritoryEpicorId,CountryId,State,City,Address,PhoneNum,Email,VendorId,SincronizadoEpicor")] ShipTo shipTo)
-        public ActionResult CreateShipTo(ShipTo shipTo)
+        public ActionResult CreateShipTo([Bind(Include = "ShipToId,CustomerId,ShipToNum,CustNum,Company,ShipToName,TerritoryEpicorId,CountryId,Country,State,City,Address,PhoneNum,Email,VendorId,SincronizadoEpicor")] ShipTo shipTo)
         {
             var country = db.Countries.Find(shipTo.CountryId);
             shipTo.Country = country.Description;
@@ -213,10 +214,10 @@ namespace NutraBioticsBackend.Controllers
             {
                 db.ShipToes.Add(shipTo);
                 db.SaveChanges();
+
                 return RedirectToAction("Details" + "/" + shipTo.CustomerId);
             }
 
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", shipTo.CustomerId);
             return View(shipTo);
         }
 
@@ -231,17 +232,15 @@ namespace NutraBioticsBackend.Controllers
 
         public ActionResult EditShipTo(int? id)
         {
-
             ShipTo shipTo = db.ShipToes.Find(id);
             if (shipTo == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", shipTo.CustomerId);
+            ViewBag.CustomerId = new SelectList(db.Customers.Where(c => c.CustomerId == shipTo.CustomerId), "CustomerId", "Names", shipTo.CustomerId);
             ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description", shipTo.CountryId);
             ViewBag.TerritoryEpicorId = new SelectList(CombosHelper.GetTerritory(), "TerritoryEpicorId", "TerritoryDesc", shipTo.TerritoryEpicorId);
-
 
             if (id == null)
             {
@@ -267,9 +266,7 @@ namespace NutraBioticsBackend.Controllers
                 PhoneNum = shipTo.PhoneNum,
                 Contacts = shipTo.Contacts.ToList(),
             };
-
             return View(shiptoview);
-
         }
 
         // POST: ShipToes/Edit/5
@@ -277,15 +274,19 @@ namespace NutraBioticsBackend.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditShipTo([Bind(Include = "ShipToId,CustomerId,ShipToNum,CustNum,Company,ShipToName,TerritoryEpicorId,CountryId,Country,State,City,Address,PhoneNum,Email,VendorId,SincronizadoEpicor")] ShipTo shipTo)
+        //public ActionResult EditShipTo([Bind(Include = "ShipToId,CustomerId,ShipToNum,CustNum,Company,ShipToName,TerritoryEpicorId,CountryId,Country,State,City,Address,PhoneNum,Email,VendorId,SincronizadoEpicor")] ShipTo shipTo)
+        public ActionResult EditShipTo(ShipTo shipTo)
         {
             if (ModelState.IsValid)
             {
+                var country = db.Countries.Find(shipTo.CountryId);
+                shipTo.Country = country.Description;
+
                 db.Entry(shipTo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details"+"/"+shipTo.CustomerId);
             }
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", shipTo.CustomerId);
+            ViewBag.CustomerId = new SelectList(db.Customers.Where(c=> c.VendorId == 74), "CustomerId", "Names", shipTo.CustomerId);
             return View(shipTo);
         }
 
@@ -296,6 +297,16 @@ namespace NutraBioticsBackend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            //var contacts = db.Contacts.Where(c => c.ShipToId == id).FirstOrDefault();
+
+            ////Contact contact = db.Contacts.Find(contacts.ShipToId);
+
+            //if (contacts != null)
+            //{
+
+            //}
+
             ShipTo shipTo = db.ShipToes.Find(id);
             if (shipTo == null)
             {
@@ -311,23 +322,30 @@ namespace NutraBioticsBackend.Controllers
         {
             ShipTo shipTo = db.ShipToes.Find(id);
             db.ShipToes.Remove(shipTo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                TempData["CustomError"] = "No se puede eliminar la sucursal.";
+                return RedirectToAction("Details" + "/" + shipTo.CustomerId);
+            }
+            return RedirectToAction("Details" + "/" + shipTo.CustomerId);
+
+
         }
 
+    #endregion
 
-        #endregion
 
+    #region Contactos
 
-        #region Contactos
-
-        // GET: Contacts/Create
-        public ActionResult CreateContact(int id)
+    // GET: Contacts/Create
+    public ActionResult CreateContact(int id)
         {
-            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", id);
-
+            ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s=> s.ShipToId == id), "ShipToId", "ShipToName", id);
             ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description");
-
             return View();
         }
 
@@ -340,15 +358,18 @@ namespace NutraBioticsBackend.Controllers
         {
             if (ModelState.IsValid)
             {
+                var country = db.Countries.Find(contact.CountryId);
+                contact.Country = country.Description;
+
                 db.Contacts.Add(contact);
                 db.SaveChanges();
                 return RedirectToAction("EditShipTo"+"/"+contact.ShipToId); ;
             }
-
-            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", contact.ShipToId);
-
+            ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s => s.ShipToId == contact.ShipToId), "ShipToId", "ShipToName", contact.ShipToId);
             return View(contact);
         }
+
+
 
         // GET: Contacts/Edit/5
         public ActionResult EditContact(int? id)
@@ -363,8 +384,7 @@ namespace NutraBioticsBackend.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", contact.ShipToId);
+            ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s=> s.ShipToId == contact.ShipToId), "ShipToId", "ShipToName", contact.ShipToId);
             ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description", contact.CountryId);
             return View(contact);
         }
@@ -378,11 +398,15 @@ namespace NutraBioticsBackend.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var country = db.Countries.Find(contact.CountryId);
+                contact.Country = country.Description;
                 db.Entry(contact).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("EditShipTo"+"/"+contact.ShipToId);
             }
-            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", contact.ShipToId);
+
+            ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s=> s.ShipToId == contact.ShipToId), "ShipToId", "ShipToName", contact.ShipToId);
             return View(contact);
         }
 
@@ -408,8 +432,15 @@ namespace NutraBioticsBackend.Controllers
         {
             Contact contact = db.Contacts.Find(id);
             db.Contacts.Remove(contact);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+
+            }
+            return RedirectToAction("EditShipTo"+"/"+contact.ShipToId);
         }
 
         #endregion

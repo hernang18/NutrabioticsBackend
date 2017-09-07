@@ -263,6 +263,7 @@
     <Compile Include="Models\PriceLstPart.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\SalesRep.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\ShipTo.cs" />
     <Compile Include="Models\ShipToesGetRequest.cs" />
     <Compile Include="Models\ShipToView.cs" />
