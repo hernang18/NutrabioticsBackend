@@ -138,7 +138,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />                
+                <input type="submit" value="Guardar Orden" class="btn btn-default" />                
                 @Html.ActionLink("Agregar Producto", "AddProduct", "OrderHeaders", null, new { @id = "SubmitAddProduct", @class = "btn btn-warning" })
             </div>
         </div>
@@ -159,25 +159,19 @@ else
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].PriceListPartId)
+                @Html.DisplayNameFor(model => model.OrderDetails[0].PartNum)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].PartId)
+                @Html.DisplayNameFor(model => model.OrderDetails[0].PartDescription)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDetails[0].Reference)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].PartNum)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDetails[0].OrderQty)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDetails[0].UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].TaxAmt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderDetails[0].Total)
@@ -189,17 +183,14 @@ else
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PriceListPartId)
+                    @Html.DisplayFor(modelItem => item.PartNum)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PartId)
+                    @Html.DisplayFor(modelItem => item.PartDescription)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Reference)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartNum)
-                </td>
+                </td>               
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderQty)
                 </td>
@@ -207,18 +198,21 @@ else
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TaxAmt)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Total)
                 </td>
-                @*<td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderDetailTmpId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.OrderDetailTmpId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderDetailTmpId })
-                </td>*@
+                <td>
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.OrderDetailTmpId })
+                </td>
             </tr>
         }
+        <tr>                                                     
+            <td colspan="5" align="right">
+               <strong>Total Orden</strong>
+            </td>
+            <td>
+                <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
+            </td>
+        </tr>
 
     </table>
 }
@@ -228,9 +222,17 @@ else
 @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $('#SubmitAddProduct').click(function () {
-         var PriceListId = $('#PriceListId').val();
-         var path = '@Url.Content("~/OrderHeaders/AddProduct")' + "?PriceListId=" + PriceListId
-            $(this).attr("href", path);
+            var PriceListId = $('#PriceListId').val();
+            if (PriceListId != null) {
+                var path = '@Url.Content("~/OrderHeaders/AddProduct")' + "?PriceListId=" + PriceListId
+                $(this).attr("href", path);
+            }
+            else
+            {
+                alert("Debe seleccionar una lista de precios");
+                var path = '@Url.Content("~/OrderHeaders/Create")'
+                $(this).attr("href", path);
+            }
         });
         $(document).ready(
 

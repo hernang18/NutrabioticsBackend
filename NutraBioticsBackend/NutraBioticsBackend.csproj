@@ -248,6 +248,7 @@
     <Compile Include="Models\InvoiceHeader.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MovementsHelper.cs" />
     <Compile Include="Models\NewOrderView.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\OrderDetailTmp.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="Models\Plant.cs" />
     <Compile Include="Models\PriceList.cs" />
     <Compile Include="Models\PriceLstPart.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Models\SalesRep.cs" />
     <Compile Include="Models\ShipTo.cs" />
     <Compile Include="Models\ShipToesGetRequest.cs" />

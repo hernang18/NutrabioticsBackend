@@ -24,6 +24,9 @@ namespace NutraBioticsBackend.Models
         [Display(Name = "Parte")]
         public string PartNum { get; set; }
 
+        [Display(Name = "Descripcion")]
+        public string PartDescription { get; set; }
+
         [Display(Name = "Cantidad")]
         public decimal OrderQty { get; set; }
 
@@ -34,6 +37,9 @@ namespace NutraBioticsBackend.Models
         [Display(Name = "Impuesto")]
         public decimal TaxAmt { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Total { get; set; }
+
+        public int UserId { get; set; }
     }
 }

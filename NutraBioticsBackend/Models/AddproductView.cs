@@ -19,6 +19,7 @@ namespace NutraBioticsBackend.Models
         [Display(Name = "Referencia")]
         public decimal Reference { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Display(Name = "Precio Unitario")]
         [DataType(DataType.Currency)]
         public decimal UnitPrice { get; set; }

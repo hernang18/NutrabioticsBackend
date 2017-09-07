@@ -27,6 +27,7 @@
         [Display(Name = "Cliente")]
         public int CustomerId { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar una Cliente")]
         [Display(Name = "Cliente Id")]
         public string CustId { get; set; }
 
@@ -46,12 +47,15 @@
         [Display(Name = "Terminos")]
         public string TermsCode { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar una sucursal")]
         [Display(Name = "Ship To")]
         public int ShipToId { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar un Contacto")]
         [Display(Name = "Contacto")]
         public int ContactId { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar una Contacto")]
         [Display(Name = "Numero Contacto")]
         public int ConNum { get; set; }   //Epicor       
 
@@ -69,6 +73,7 @@
         [Display(Name = "Sincronizado Epicor")]
         public bool SincronizadoEpicor { get; set; }
 
+        [Required(ErrorMessage = "Debe seleccionar una sucursal")]
         public string ShipToNum { get; set; }
 
         public string RowMod { get; set; }  //D:DElete U:Update C:Create

@@ -22,26 +22,55 @@ namespace NutraBioticsBackend.Controllers
             return View(orderHeaders.ToList());
         }
 
+        public ActionResult DeleteProduct(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var orderDetailTmpConsulta = db.OrderDetailTmp.Where(o => o.UserId == 1 && o.OrderDetailTmpId == id).FirstOrDefault();
+            if (orderDetailTmpConsulta == null)
+            {
+                return HttpNotFound();
+            }
+            db.OrderDetailTmp.Remove(orderDetailTmpConsulta);
+            db.SaveChanges();
+            return  RedirectToAction("Create");
+            
+        }
+
         [HttpPost]
         public ActionResult AddProduct(AddproductView view)
         {
             if(ModelState.IsValid)
             {
-                var priceListParts = db.PriceListParts.Where(p => p.PriceListId == view.PriceListId && p.PartId == view.PartId).FirstOrDefault();
-                var part = db.Parts.Find(view.PartId);
-                var orderDetailTmp = new OrderDetailTmp
-                {
+                var orderDetailTmpConsulta = db.OrderDetailTmp.Where(o => o.UserId == 1 && o.PartId==view.PartId).FirstOrDefault();
 
-                    OrderQty = view.OrderQty,       
-                    PartId = view.PartId,
-                    PartNum = part.PartNum,
-                    PriceListPartId = priceListParts.PriceListPartId,
-                    Reference = view.Reference,
-                    TaxAmt = 0,
-                    Total = view.OrderQty * view.UnitPrice,
-                    UnitPrice=view.UnitPrice
-                };
-                db.OrderDetailTmp.Add(orderDetailTmp);
+                if (orderDetailTmpConsulta == null)
+                {
+                    var priceListParts = db.PriceListParts.Where(p => p.PriceListId == view.PriceListId && p.PartId == view.PartId).FirstOrDefault();
+                    var part = db.Parts.Find(view.PartId);
+                    var orderDetailTmp = new OrderDetailTmp
+                    {
+                        OrderQty = view.OrderQty,
+                        PartId = view.PartId,
+                        PartNum = part.PartNum,
+                        PartDescription = part.PartDescription,
+                        PriceListPartId = priceListParts.PriceListPartId,
+                        Reference = view.Reference,
+                        TaxAmt = 0,
+                        Total = view.OrderQty * view.UnitPrice,
+                        UnitPrice = view.UnitPrice,
+                        UserId = 1
+                    };
+                    db.OrderDetailTmp.Add(orderDetailTmp);
+                }
+                else
+                {
+                    orderDetailTmpConsulta.OrderQty += view.OrderQty;
+                    db.Entry(orderDetailTmpConsulta).State = EntityState.Modified;
+                }
+        
                 db.SaveChanges();
                 return RedirectToAction("Create");
 
@@ -51,7 +80,7 @@ namespace NutraBioticsBackend.Controllers
             return View(view);
         }
 
-            public ActionResult AddProduct(int PriceListId)
+        public ActionResult AddProduct(int PriceListId)
         {
 
             //var CustomerPriceList = db.CustomerPriceLists.Where(c => c.CustomerId == CustomerID).OrderBy(c => c.CustomerId).ToList();
@@ -82,15 +111,15 @@ namespace NutraBioticsBackend.Controllers
             ViewBag.CustomerId = new SelectList(CombosHelper.GetCustomer(74), "CustomerId", "Names");
             ViewBag.ShipToId = new SelectList(db.ShipToes.Where(c => c.VendorId == 74 && c.CustomerId==db.Customers.FirstOrDefault().CustomerId).OrderBy(c => c.ShipToName), "ShipToId", "ShipToName");
             ViewBag.ContactId = new SelectList(db.Contacts.Where(c => c.VendorId == 74 && c.ShipToId==db.ShipToes.FirstOrDefault().ShipToId).OrderBy(c=>c.Name), "ContactId", "Name");
-            ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");            
-            var view = new NewOrderView
+            ViewBag.PriceListId = new SelectList(db.PriceLists.Where(p=>p.PriceListId==0).OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");          
+           var view = new NewOrderView
             {
                 Date = DateTime.Now,
                 NeedByDate = DateTime.Now
             };
             
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName");
-            view.OrderDetails = db.OrderDetailTmp.ToList();
+            view.OrderDetails = db.OrderDetailTmp.Where(o=>o.UserId==1).ToList();
             return View(view);  
         }
 
@@ -99,20 +128,57 @@ namespace NutraBioticsBackend.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SalesOrderHeaderId,SalesOrderHeaderInterId,OrderNum,UserId,VendorId,CustomerId,CustId,CreditHold,Date,NeedByDate,TermsCode,ShipToId,ContactId,ConNum,SalesCategory,Observations,TaxAmt,Total,SincronizadoEpicor,ShipToNum,RowMod")] OrderHeader orderHeader)
+        public ActionResult Create(NewOrderView view)
         {
+            view.OrderDetails = db.OrderDetailTmp.Where(o => o.UserId == 1).ToList();
+            //ViewBag.ContactId = new SelectList(db.Contacts.Where(c=>c.ContactId==view.ContactId), "ContactId", "Name", view.ContactId);
+            //ViewBag.CustomerId = new SelectList(db.Customers.Where(c=>c.CustomerId==view.CustomerId), "CustomerId", "Names", view.CustomerId);            
+            //ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s=>s.ShipToId==view.ShipToId), "ShipToId", "ShipToName", view.ShipToId);   
+            //ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", view.UserId);
+            //ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");
+            //return View(view);
+            view.RowMod = "C";
+            view.Platform = "WEB";
+            view.SalesCategory = "Bogota";
+            if(view.CustId==null && view.CustomerId!=0)
+            {
+                var customer = db.Customers.Where(c => c.CustomerId == view.CustomerId).FirstOrDefault();
+                view.CustId = customer.CustId;
+            }
+            else
+            {
+                ModelState.AddModelError(String.Empty, "Seleccione un cliente");
+            }
+            if (view.ShipToNum == null && view.ShipToId != 0)
+            {
+                var shipto = db.ShipToes.Where(s => s.ShipToId == view.ShipToId).FirstOrDefault();
+                view.ShipToNum = shipto.ShipToNum;
+            }
+            if (view.ConNum == 0 && view.ContactId != 0)
+            {
+                var contact = db.Contacts.Where(c => c.ContactId == view.ContactId).FirstOrDefault();
+                view.ConNum = contact.ConNum;
+            }
+            view.OrderDetails = db.OrderDetailTmp.Where(o => o.UserId == 1).ToList();
             if (ModelState.IsValid)
             {
-                db.OrderHeaders.Add(orderHeader);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var response = MovementsHelper.NewOrder(view, 1);
+                if (response.Succes)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(String.Empty, response.Message);
+                //db.OrderHeaders.Add(orderHeader);
+                //db.SaveChanges();             
             }
-
-            ViewBag.ContactId = new SelectList(db.Contacts, "ContactId", "ShipToNum", orderHeader.ContactId);
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", orderHeader.CustomerId);
-            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", orderHeader.ShipToId);
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", orderHeader.UserId);
-            return View(orderHeader);
+            view.OrderDetails = db.OrderDetailTmp.Where(o => o.UserId == 1).ToList();
+            ViewBag.ContactId = new SelectList(db.Contacts, "ContactId", "Name", view.ContactId);
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "Names", view.CustomerId);
+            ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToName", view.ShipToId);
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", view.UserId);
+            ViewBag.PriceListId = new SelectList(db.PriceLists.OrderBy(P => P.PriceListId), "PriceListId", "ListDescription");
+            //return RedirectToAction("Create", view);
+            return View(view);
         }
 
         // GET: OrderHeaders/Edit/5
