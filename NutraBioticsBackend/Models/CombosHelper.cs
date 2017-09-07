@@ -40,5 +40,32 @@ namespace NutraBioticsBackend.Models
             });
             return priceListPart.OrderBy(c => c.PartDescription).ToList();
         }
+
+        public static List<Country> GetCountry()
+        {
+            DataContext db = new DataContext();
+            var countries = db.Countries.ToList();
+            countries.Add(new Country
+            {
+                CountryId = 0,
+                Description = "[Seleccione pais...]"
+            });
+            return countries.OrderBy(c => c.Description).ToList();
+        }
+
+        public static List<Territory> GetTerritory()
+        {
+            DataContext db = new DataContext();
+            var territories = db.Territories.ToList();
+            territories.Add(new Territory
+            {
+                TerritoryID = 0,
+                TerritoryDesc = "[Seleccione Territorio...]"
+            });
+            return territories.OrderBy(c => c.TerritoryDesc).ToList();
+        }
+
+
+
     }
 }

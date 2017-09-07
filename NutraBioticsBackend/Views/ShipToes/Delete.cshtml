@@ -1,4 +1,4 @@
-﻿@model NutraBioticsBackend.Models.Customer
+﻿@model NutraBioticsBackend.Models.ShipTo
 
 @{
     ViewBag.Title = "Delete";
@@ -8,15 +8,23 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Customer</h4>
+    <h4>ShipTo</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CustId)
+            @Html.DisplayNameFor(model => model.Customer.CustId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CustId)
+            @Html.DisplayFor(model => model.Customer.CustId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipToNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipToNum)
         </dd>
 
         <dt>
@@ -36,27 +44,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ResaleId)
+            @Html.DisplayNameFor(model => model.ShipToName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ResaleId)
+            @Html.DisplayFor(model => model.ShipToName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TerritoryId)
+            @Html.DisplayNameFor(model => model.TerritoryEpicorId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TerritoryId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShipViaCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShipViaCode)
+            @Html.DisplayFor(model => model.TerritoryEpicorId)
         </dd>
 
         <dt>
@@ -65,6 +65,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.CountryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
         </dd>
 
         <dt>
@@ -100,43 +108,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Names)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Names)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastNames)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastNames)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditHold)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreditHold)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TermsCode)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TermsCode)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Terms)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Terms)
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
         <dt>
@@ -145,6 +121,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.VendorId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SincronizadoEpicor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SincronizadoEpicor)
         </dd>
 
     </dl>

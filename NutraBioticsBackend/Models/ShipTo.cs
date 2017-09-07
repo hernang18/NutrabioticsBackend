@@ -9,12 +9,17 @@
         [Key]
         public int ShipToId { get; set; }
 
+        [Editable(false)]
         public int CustomerId { get; set; }
 
         public string ShipToNum { get; set; }  //Epicor
 
+
+        [Editable(false)]
         public int CustNum { get; set; } //epicor
 
+
+        [Display(Name = "Compañia")]
         public string Company { get; set; }
 
         [Display(Name = "Nombre Sucursal")]
@@ -22,14 +27,21 @@
 
         public string TerritoryEpicorId { get; set; }
 
+        public int CountryId { get; set; }
+
+        [Display(Name = "Pais")]
         public string Country { get; set; }
 
+        [Display(Name = "Departamento")]
         public string State { get; set; }
 
+        [Display(Name = "Ciudad")]
         public string City { get; set; }
 
+        [Display(Name = "Direccion")]
         public string Address { get; set; }
 
+        [Display(Name = "Telefono")]
         public string PhoneNum { get; set; }
 
         public string Email { get; set; }

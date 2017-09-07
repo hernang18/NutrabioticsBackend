@@ -16,6 +16,8 @@ namespace NutraBioticsBackend.Models
 
         public int CustNum { get; set; }    //epicor
 
+
+        [Display(Name = "Compañia")]
         public string Company { get; set; }
 
         public string ResaleId { get; set; }
@@ -24,12 +26,18 @@ namespace NutraBioticsBackend.Models
 
         public string ShipViaCode { get; set; }
 
+        public int CountryId { get; set; }
+
+        [Display(Name = "Pais")]
         public string Country { get; set; }
 
+        [Display(Name = "Departamento")]
         public string State { get; set; }
 
+        [Display(Name = "Ciudad")]
         public string City { get; set; }
 
+        [Display(Name = "Direccion")]
         public string Address { get; set; }
 
         public string PhoneNum { get; set; }
