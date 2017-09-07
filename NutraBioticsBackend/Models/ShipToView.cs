@@ -18,11 +18,17 @@ namespace NutraBioticsBackend.Models
 
         public int CustNum { get; set; } //Epicor
 
+
+        [Display(Name = "Compañia")]
         public string Company { get; set; }
 
         public string ShipToName { get; set; }
 
+        [Display(Name = "Territorio")]
         public string TerritoryEpicorId { get; set; }
+
+        [Display(Name = "Pais")]
+        public int CountryId { get; set; }
 
         [Display(Name = "Pais")]
         public string Country { get; set; }
@@ -36,6 +42,7 @@ namespace NutraBioticsBackend.Models
         [Display(Name = "Direccion")]
         public string Address { get; set; }
 
+        [Display(Name = "Telefono")]
         public string PhoneNum { get; set; }
 
         public string Email { get; set; }

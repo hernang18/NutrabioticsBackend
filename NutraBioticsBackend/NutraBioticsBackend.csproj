@@ -225,6 +225,7 @@
     <Compile Include="Controllers\OrderDetailsController.cs" />
     <Compile Include="Controllers\OrderDetailTmpsController.cs" />
     <Compile Include="Controllers\OrderHeadersController.cs" />
+    <Compile Include="Controllers\ShipToesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -389,6 +390,11 @@
     <Content Include="Views\OrderDetailTmps\Details.cshtml" />
     <Content Include="Views\OrderDetailTmps\Edit.cshtml" />
     <Content Include="Views\OrderDetailTmps\Index.cshtml" />
+    <Content Include="Views\ShipToes\Create.cshtml" />
+    <Content Include="Views\ShipToes\Delete.cshtml" />
+    <Content Include="Views\ShipToes\Details.cshtml" />
+    <Content Include="Views\ShipToes\Edit.cshtml" />
+    <Content Include="Views\ShipToes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

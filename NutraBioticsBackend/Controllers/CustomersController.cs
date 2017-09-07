@@ -44,10 +44,13 @@ namespace NutraBioticsBackend.Controllers
                 Company = customer.Company,
                 Address = customer.Address,
                 Country = customer.Country,
+                CountryId = customer.CountryId,
                 State = customer.State,
                 CreditHold = customer.CreditHold,
                 TerritoryId = customer.TerritoryId,
                 City = customer.City,
+                ShipViaCode = customer.ShipViaCode,
+                LastNames = customer.LastNames,
                 Names = customer.Names,
                 PhoneNum = customer.PhoneNum,
                 ResaleId = customer.ResaleId,
@@ -236,7 +239,7 @@ namespace NutraBioticsBackend.Controllers
             }
 
             ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", shipTo.CustomerId);
-            ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description", shipTo.Country);
+            ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description", shipTo.CountryId);
             ViewBag.TerritoryEpicorId = new SelectList(CombosHelper.GetTerritory(), "TerritoryEpicorId", "TerritoryDesc", shipTo.TerritoryEpicorId);
 
 
@@ -250,17 +253,40 @@ namespace NutraBioticsBackend.Controllers
                 ShipToId = shipTo.ShipToId,
                 ShipToNum = shipTo.ShipToNum,
                 ShipToName = shipTo.ShipToName,
+                CustomerId = shipTo.CustomerId,
+                CustNum = shipTo.CustNum,
                 Company = shipTo.Company,
                 Address = shipTo.Address,
                 State = shipTo.State,
+                Email = shipTo.Email,
+                Country = shipTo.Country,
+                CountryId = shipTo.CountryId,
+                SincronizadoEpicor = shipTo.SincronizadoEpicor,
+                VendorId = shipTo.VendorId,
                 City = shipTo.City,
                 PhoneNum = shipTo.PhoneNum,
-                CustNum = shipTo.CustNum,
                 Contacts = shipTo.Contacts.ToList(),
             };
 
             return View(shiptoview);
 
+        }
+
+        // POST: ShipToes/Edit/5
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditShipTo([Bind(Include = "ShipToId,CustomerId,ShipToNum,CustNum,Company,ShipToName,TerritoryEpicorId,CountryId,Country,State,City,Address,PhoneNum,Email,VendorId,SincronizadoEpicor")] ShipTo shipTo)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(shipTo).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details"+"/"+shipTo.CustomerId);
+            }
+            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CustId", shipTo.CustomerId);
+            return View(shipTo);
         }
 
         // GET: ShipToes/DeleteShipTo/5
@@ -331,12 +357,15 @@ namespace NutraBioticsBackend.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Contact contact = db.Contacts.Find(id);
             if (contact == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.ShipToId = new SelectList(db.ShipToes, "ShipToId", "ShipToNum", contact.ShipToId);
+            ViewBag.CountryId = new SelectList(CombosHelper.GetCountry(), "CountryId", "Description", contact.CountryId);
             return View(contact);
         }
 
