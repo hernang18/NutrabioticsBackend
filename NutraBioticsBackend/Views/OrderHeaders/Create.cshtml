@@ -10,11 +10,11 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal"> 
-            <h4>OrderHeader</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <h4>OrderHeader</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.OrderNum, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,16 +75,7 @@
                     @Html.ValidationMessageFor(model => model.TermsCode, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.PriceListId,"Lista Precio", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-           
-    </div>
+        </div>
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.ShipToId, "ShipTo", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -134,93 +125,144 @@
                         @Html.ValidationMessageFor(model => model.SincronizadoEpicor, "", new { @disabled = true, @class = "text-danger" })
                     </div>
                 </div>
-            </div>          
+            </div>
         </div>
+
+       
+            <div class="form-group2">
+                <div class="form-group2">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.LabelFor(model => model.PriceListId, "Lista Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group2">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.LabelFor(model => model.PartId, "Parte", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("PartId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group2">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.LabelFor(model => model.QTY, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.QTY, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.QTY, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group2">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.LabelFor(model => model.Reference, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Reference, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Reference, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group2">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.LabelFor(model => model.UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.UnitPrice, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@            
+        </div>
+
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar Orden" class="btn btn-default" />                
+            <div class="col-md-offset-0 col-md-10">        
+                <input type="submit" value="Guardar" formmethod="post" class="btn btn-default"/>       
                 @Html.ActionLink("Agregar Producto", "AddProduct", "OrderHeaders", null, new { @id = "SubmitAddProduct", @class = "btn btn-warning" })
             </div>
         </div>
     </div>
-}
-<!-- En la vista en lugar del ActionLink un <a /> normal -->
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-<h4>Detalle Orden</h4>
-@if(Model.OrderDetails==null)
-{
-    <h5>La orden no tiene detalle</h5>
 }
-else
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].PartNum)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].PartDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].Reference)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].OrderQty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDetails[0].Total)
-            </th>
-            <th></th>
-        </tr>
+                <!-- En la vista en lugar del ActionLink un <a /> normal -->
 
-        @foreach (var item in Model.OrderDetails)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartNum)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PartDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reference)
-                </td>               
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderQty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                </td>
-                <td>
-                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.OrderDetailTmpId })
-                </td>
-            </tr>
-        }
-        <tr>                                                     
-            <td colspan="5" align="right">
-               <strong>Total Orden</strong>
-            </td>
-            <td>
-                <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
-            </td>
-        </tr>
+                <div>
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+                <h4>Detalle Orden</h4>
+                @if (Model.OrderDetails == null)
+                {
+                    <h5>La orden no tiene detalle</h5>
+                }
+                else
+                {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].PartNum)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].PartDescription)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].Reference)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].OrderQty)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].UnitPrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OrderDetails[0].Total)
+                            </th>
+                            <th></th>
+                        </tr>
 
-    </table>
-}
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartNum)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartDescription)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Reference)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderQty)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.OrderDetailTmpId })
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="5" align="right">
+                                <strong>Total Orden</strong>
+                            </td>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => Model.TotalValue)</strong>
+                            </td>
+                        </tr>
+
+                    </table>
+                }
 
 
 @section Scripts {
 @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+<script type="text/javascript">
         $('#SubmitAddProduct').click(function () {
             var PriceListId = $('#PriceListId').val();
             if (PriceListId != null) {
@@ -234,6 +276,22 @@ else
                 $(this).attr("href", path);
             }
         });
+    @*$('#AddProdut').click(function() {
+                $.ajax({
+                    url: '@Url.Action("CreateProducto", "NewOrderView")',
+                    type: 'POST',
+                    cache: false,
+                    data: formContainer.serialize(),
+                    success: function(result) {
+                        var modelStatus = $('.model-status');
+                        if (result) modelStatus.text("Estado: Enviado con éxito");
+                        else modelStatus.text("Estado: Enviado con error. Compruebe que ha rellenado todos los campos");
+                    },
+                    error: function(jqXHR, textStatus, error) {
+                        $('.model-status').text("Estado: Error inesperado");
+                    }
+                });
+            });*@
         $(document).ready(
 
             function ()
@@ -244,6 +302,7 @@ else
                             $("#ShipToId").empty();
                             $("#ContactId").empty();
                             $("#PriceListId").empty();
+                            $("#PartId").empty();
                             $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("GetShipToesList")',
@@ -256,9 +315,6 @@ else
                                             + shipto.ShipToName + '</option>');
                                     });
                                 },
-                                error: function (ex) {
-                                    alert('El cliente no tiene shipto Asociado');
-                                }
                             });
                             $.ajax({
                                 type: 'POST',
@@ -287,7 +343,7 @@ else
                                 });
                                 },
                             });
-                               $.ajax({
+                            $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("GetPriceList")',
                                 dataType: 'json',
@@ -297,12 +353,22 @@ else
                                         $("#PriceListId").append('<option value="'
                                             + priceList.PriceListId + '">'
                                             + priceList.ListDescription + '</option>');
+                                });
+                                },
+                            });
+                            @*$.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetPartlist")',
+                                dataType: 'json',
+                                data: { PriceListId: $("#PriceListId").val() },
+                                success: function (Part) {
+                                    $.each(Part, function (i, part) {
+                                        $("#PartId").append('<option value="'
+                                            + part.PartId + '">'
+                                            + part.PartDescription + '</option>');
                                     });
                                 },
-                                error: function (ex) {
-                                    alert('El cliente no tiene shipto Asociado');
-                                }
-                            });
+                            });*@
                             return false;
                 })
                 $("#ShipToId").change(function ()
@@ -320,16 +386,48 @@ else
                                             + contact.Name + '</option>');
                                     });
                                 },
-                                //error: function (ex) {
-                                //    alert('EL shipto no tiene contactos Asociados');
-                                //}
-
                             });
                             return false;
-                })
+                        })
+                @*$("#PriceListId").change(function ()
+                {
+                        $("#PartId").empty();
+                           $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("GetPartlist")',
+                                dataType: 'json',
+                                data: { PriceListId: $("#PriceListId").val() },
+                                success: function (Part) {
+                                    $.each(Part, function (i, part) {
+                                        $("#PartId").append('<option value="'
+                                            + part.PartId + '">'
+                                            + part.PartDescription + '</option>');
+                                    });
+                                },
+                            });
+                            return false;
+                        })
+                $("#PartId").change(function ()
+                {
+                    $("#UnitPrice").empty();
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("GetProductPrice")',
+                            dataType: 'json',
+                            data: { PriceListId: $("#PriceListId").val(), PartId: $("#PartId").val() },
+                            success: function (parts) {
+                                $.each(parts, function (i, part) {
+                                    $("#UnitPrice").attr("value", part.BasePrice);
+                                    //$("#UnitPrice").prop('disabled', true);
+                                });
+                            },
+                        });
+                            return false;
+                })*@
+
             }
         );
-    </script>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+</script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 }

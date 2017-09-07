@@ -51,9 +51,10 @@ namespace NutraBioticsBackend.Models
                     var orderDetails = db.OrderDetailTmp.Where(o => o.UserId == UserId).ToList();
                     foreach (var detail in orderDetails)
                     {
+                        i += 1;
                         var orderDetail = new OrderDetail
-                        {
-                            OrderLine = i++,
+                        {                            
+                            OrderLine = i,
                             OrderQty = detail.OrderQty,
                             OrderNum = orderHeader.OrderNum,
                             PartId = detail.PartId,

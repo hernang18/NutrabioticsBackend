@@ -81,7 +81,20 @@
         public string Platform { get; set; }
 
         public int PriceListId { get; set; }
-        
+
+        [Display(Name = "Parte")]
+        public int PartId { get; set; }
+
+        [Display(Name = "Cantidad")]
+        public decimal QTY { get; set; }
+
+        [Display(Name = "Referencia")]
+        public decimal Reference { get; set; }
+
+        [Editable(false)]
+        [Display(Name = "Precio")]
+        public decimal UnitPrice { get; set; }
+
         public List<OrderDetailTmp> OrderDetails { get; set; }
  
         [DisplayFormat(DataFormatString ="{0:C2}",ApplyFormatInEditMode =false)]  

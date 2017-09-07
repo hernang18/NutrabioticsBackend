@@ -23,6 +23,18 @@ namespace NutraBioticsBackend.Models
             return Customer.OrderBy(c => c.Names).ToList();
         }
 
+        public static List<Part> GetOnePartNull()
+        {
+
+            List<Part> part = new List<Part>();
+            part.Add(new Part
+            {
+                 PartId= 0,
+                 PartDescription = "[Seleccione cliente]"
+            });
+            return part;
+        }
+
         public static List<PriceListPart> GetPriceListPart(int PriceListId)
         {
             DataContext db = new DataContext();
