@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
  
-<h2>Create</h2>
+<h2>Crear Orden</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,10 +12,17 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>OrderHeader</h4>
-        <hr />
+        <h4></h4>
+        <hr/>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SalesOrderHeaderId,"", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SalesOrderHeaderId, new { htmlAttributes = new {@class = "hidden" } })
+                    @Html.ValidationMessageFor(model => model.SalesOrderHeaderId, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.OrderNum, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -126,19 +133,18 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                    @Html.LabelFor(model => model.PriceListId, "Lista Precio", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
+                    </div>
+            </div>
         </div>
 
        
             <div class="form-group2">
-                <div class="form-group2">
-                    <div class="col-md-offset-2 col-md-10">
-                        @Html.LabelFor(model => model.PriceListId, "Lista Precio", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
+               
                 @*<div class="form-group2">
                     <div class="col-md-offset-2 col-md-10">
                         @Html.LabelFor(model => model.PartId, "Parte", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -179,7 +185,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">        
-                <input type="submit" value="Guardar" formmethod="post" class="btn btn-default"/>       
+                <input type="submit" value="Guardar" formmethod="post" class="btn btn-success"/>  
+                @*@Html.ActionLink("Agregar Producto", "AddProduct", new { PriceListId = Model.PriceListId, SalesOrderHeaderId=Model.SalesOrderHeaderId, CustomerId=Model.CustomerId, ShipToId=Model.ShipToId, ContactId=Model.ContactId, Date=Model.Date, NeedByDate=Model.NeedByDate, Observations=Model.Observations })*@  
                 @Html.ActionLink("Agregar Producto", "AddProduct", "OrderHeaders", null, new { @id = "SubmitAddProduct", @class = "btn btn-warning" })
             </div>
         </div>
@@ -189,7 +196,7 @@
                 <!-- En la vista en lugar del ActionLink un <a /> normal -->
 
                 <div>
-                    @Html.ActionLink("Back to List", "Index")
+                    @Html.ActionLink("Regresar a la lista", "Index")
                 </div>
                 <h4>Detalle Orden</h4>
                 @if (Model.OrderDetails == null)
@@ -263,15 +270,25 @@
 @section Scripts {
 @Scripts.Render("~/bundles/jqueryval")
 <script type="text/javascript">
-        $('#SubmitAddProduct').click(function () {
+    $("#CreditHold").prop('disabled', true);
+    $("#SincronizadoEpicor").prop('disabled', true);
+     $('#SubmitAddProduct').click(function () {
             var PriceListId = $('#PriceListId').val();
-            if (PriceListId != null) {
-                var path = '@Url.Content("~/OrderHeaders/AddProduct")' + "?PriceListId=" + PriceListId
+            var SalesOrderHeaderId = $('#SalesOrderHeaderId').val();
+            var CustomerId = $('#CustomerId').val();
+            var ShipToId = $('#ShipToId').val();
+            var ContactId = $('#ContactId').val();
+            var Date = $('#Date').val();
+            var NeedByDate = $('#NeedByDate').val();
+            var Observations = $('#Observations').val();
+            var Terms = $('#TermsCode').val();
+            if (PriceListId != null && CustomerId != null && ShipToId != null && ContactId != null && PriceListId != 0 && CustomerId != 0 && ShipToId != 0 && ContactId != 0) {
+                var path = '@Url.Content("~/OrderHeaders/AddProduct")' + "?PriceListId=" + PriceListId + "&SalesOrderHeaderId=" + SalesOrderHeaderId + "&CustomerId=" + CustomerId + "&ShipToId=" + ShipToId + "&ContactId=" + ContactId + "&Date=" + Date + "&NeedByDate=" + NeedByDate + "&Observations=" + Observations + "&Terms=" + Terms;
                 $(this).attr("href", path);
             }
             else
             {
-                alert("Debe seleccionar una lista de precios");
+                alert("verifique que haya seleccionado cliente, sucursal, contacto y lista de precio");
                 var path = '@Url.Content("~/OrderHeaders/Create")'
                 $(this).attr("href", path);
             }
@@ -428,6 +445,6 @@
             }
         );
 </script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+@*<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>*@
 }

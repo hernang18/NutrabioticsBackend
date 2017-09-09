@@ -232,6 +232,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddproductEditView.cs" />
     <Compile Include="Models\AddproductView.cs" />
     <Compile Include="Models\Calendar.cs" />
     <Compile Include="Models\CashHeader.cs" />
@@ -398,6 +399,7 @@
     <Content Include="Views\ShipToes\Details.cshtml" />
     <Content Include="Views\ShipToes\Edit.cshtml" />
     <Content Include="Views\ShipToes\Index.cshtml" />
+    <Content Include="Views\OrderHeaders\AddProductEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,6 +23,40 @@ namespace NutraBioticsBackend.Models
             return Customer.OrderBy(c => c.Names).ToList();
         }
 
+        public static List<ShipTo> GetShipto(int VendorId)
+        {
+            DataContext db = new DataContext();
+            var shipto = db.ShipToes.Where(c => c.VendorId == VendorId).OrderBy(c => c.ShipToName).ToList();
+            shipto.Add(new ShipTo
+            {
+                ShipToId = 0,
+                ShipToName = "[Seleccione Shipto]"
+            });
+            return shipto.OrderBy(c => c.ShipToName).ToList();
+        }
+
+        public static List<PriceList> GetPriceList(int customerId)
+        {
+            DataContext db = new DataContext();
+            var customerpricelist = db.CustomerPriceLists.Where(c => c.CustomerId == customerId);
+            var pricelist = from item in db.PriceLists
+                            join item2 in customerpricelist on item.PriceListId equals item2.PriceListId
+                            select item;
+
+            return pricelist.OrderBy(p=>p.ListDescription).ToList();
+        }
+        public static List<Contact> GetContact(int VendorID)
+        {
+            DataContext db = new DataContext();
+            var contact = db.Contacts.Where(c=>c.VendorId==VendorID).OrderBy(c => c.Name).ToList();
+            contact.Add(new Contact
+            {
+                ContactId = 0,
+                Name = "[Seleccione Contacto]"
+            });
+            return contact.OrderBy(c => c.Name).ToList();
+        }
+
         public static List<Part> GetOnePartNull()
         {
 

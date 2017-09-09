@@ -65,9 +65,13 @@
         [Display(Name = "Observaciones")]
         public string Observations { get; set; }
 
+        [Editable(false)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Display(Name = "Impuesto")]
         public decimal TaxAmt { get; set; }
 
+        [Editable(false)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public decimal Total { get; set; }
 
         [Display(Name = "Sincronizado Epicor")]
@@ -79,6 +83,9 @@
         public string RowMod { get; set; }  //D:DElete U:Update C:Create
 
         public string Platform { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
+        public int? PriceListId { get; set; }
 
         [JsonIgnore]
         public virtual User User { get; set; }
@@ -94,5 +101,7 @@
 
         [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public List<OrderDetail> OrderDetailList { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Listado Ordenes</h2>
 
 <p>
     @Html.ActionLink("Crear Orden", "Create")
@@ -107,10 +107,11 @@
             @Html.DisplayFor(modelItem => item.User.FirstName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SalesOrderHeaderId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SalesOrderHeaderId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SalesOrderHeaderId })
+
+            @Html.ActionLink("Editar", "Edit", new { id=item.SalesOrderHeaderId},new { @class = "btn btn-warning" }) 
+            @Html.ActionLink("Borrar", "Delete", new { id = item.SalesOrderHeaderId }, new{@class = "btn btn-danger" })
         </td>
+     
     </tr>
 }
 

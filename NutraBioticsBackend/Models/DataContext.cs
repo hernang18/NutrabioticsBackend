@@ -52,6 +52,8 @@
 
         public DbSet<NutraBioticsBackend.Models.OrderDetailTmp> OrderDetailTmp { get; set; }
 
+        public DbSet<NutraBioticsBackend.Models.NewOrderView> NewOrderView { get; set; }
+
         public System.Data.Entity.DbSet<NutraBioticsBackend.Models.Territory> Territories { get; set; }
 
         public System.Data.Entity.DbSet<NutraBioticsBackend.Models.PersonContact> PersonContacts { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -43,6 +44,7 @@ namespace NutraBioticsBackend.Models
                         Total = view.Total,
                         UserId = UserId,
                         VendorId = view.VendorId,
+                        PriceListId=view.PriceListId,
                         RowMod = "C"
                     };
                     db.OrderHeaders.Add(orderHeader);
@@ -66,9 +68,11 @@ namespace NutraBioticsBackend.Models
                             Reference = detail.Reference,
                             Total = detail.Total
                         };
-                        db.OrderDetails.Add(orderDetail);
-                        db.OrderDetailTmp.Remove(detail);
+                        db.OrderDetails.Add(orderDetail);                     
+                        db.OrderDetailTmp.Remove(detail);                      
                     }
+                    var newordervie = db.NewOrderView.Find(view.SalesOrderHeaderId);
+                    db.NewOrderView.Remove(newordervie);
                     db.SaveChanges();
                     Transaction.Commit();
                     return new Response { Succes = true, };
@@ -80,6 +84,20 @@ namespace NutraBioticsBackend.Models
                     return new Response { Succes = false,Message=ex.Message };
                 }
             }
+        }
+
+        public static void CreateNewOrderNew(NewOrderView view)
+        {
+
+            db.NewOrderView.Add(view);
+            db.SaveChanges();
+
+        }
+
+        public static void UpdateNiewOrderView(NewOrderView view)
+        {          
+            db.Entry(view).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }
