@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     public class OrderHeader
     {
@@ -72,8 +73,21 @@
 
         [Editable(false)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal Total { get; set; }
+        public decimal Total
+        {
+            get
+            {
+                if (OrderDetailList == null)
+                {
+                    return 0;
+                }
 
+                return OrderDetailList.Sum(od => od.Total);
+            }
+            set
+            {
+            }
+        }
         [Display(Name = "Sincronizado Epicor")]
         public bool SincronizadoEpicor { get; set; }
 

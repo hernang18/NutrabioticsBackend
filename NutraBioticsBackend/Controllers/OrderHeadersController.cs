@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NutraBioticsBackend.Models;
+using Microsoft.AspNet.Identity;
 
 namespace NutraBioticsBackend.Controllers
 {
@@ -350,7 +351,7 @@ namespace NutraBioticsBackend.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SalesOrderHeaderId,SalesOrderHeaderInterId,OrderNum,UserId,VendorId,CustomerId,CustId,CreditHold,Date,NeedByDate,TermsCode,ShipToId,ContactId,ConNum,SalesCategory,Observations,TaxAmt,Total,SincronizadoEpicor,ShipToNum,RowMod")] OrderHeader orderHeader)
+        public ActionResult Edit(OrderHeader orderHeader)
         {
             string control = string.Empty;
             int sw=1;
@@ -359,16 +360,36 @@ namespace NutraBioticsBackend.Controllers
                 control = "Contacto";
                 sw = 0;
             }
+            else
+            {
+                var contact = db.Contacts.Where(c => c.ContactId == orderHeader.ContactId).FirstOrDefault();
+                orderHeader.ConNum = contact.ConNum;
+            }
             if (orderHeader.ShipToId == 0)
             {
                 control = "ShipTo";
                 sw = 0;
+            }
+            else
+            {
+                var shipto = db.ShipToes.Where(s => s.ShipToId == orderHeader.ShipToId).FirstOrDefault();
+                orderHeader.ShipToNum = shipto.ShipToNum;
             }
             if ( orderHeader.CustomerId==0)
             {
                 control = "Cliente";
                 sw = 0;
             }
+            else
+            {
+                var customer = db.Customers.Where(c => c.CustomerId == orderHeader.CustomerId).FirstOrDefault();
+                orderHeader.CustId = customer.CustId;
+            }
+
+            orderHeader.Platform = "WEB";
+            orderHeader.RowMod = "U";
+            orderHeader.SalesCategory = "";
+            orderHeader.OrderDetailList = db.OrderDetails.Where(o => o.SalesOrderHeaderId == orderHeader.SalesOrderHeaderId).ToList();
             if (ModelState.IsValid && sw==1)
             {
                 db.Entry(orderHeader).State = EntityState.Modified;
@@ -379,6 +400,7 @@ namespace NutraBioticsBackend.Controllers
             ViewBag.CustomerId = new SelectList(db.Customers.Where(c => c.VendorId == 74 && c.CustomerId == orderHeader.CustomerId), "CustomerId", "Names", orderHeader.CustomerId);
             ViewBag.ShipToId = new SelectList(db.ShipToes.Where(s => s.VendorId == 74 && s.CustomerId == orderHeader.CustomerId), "ShipToId", "ShipToName", orderHeader.ShipToId);
             ViewBag.ContactId = new SelectList(db.Contacts.Where(c => c.VendorId == 74 && c.ShipToId == orderHeader.ShipToId), "ContactId", "Name", orderHeader.ContactId);
+            ViewBag.PriceListId = new SelectList(CombosHelper.GetPriceList(orderHeader.CustomerId), "PriceListId", "ListDescription",orderHeader.CustomerId);
             ViewBag.UserId = new SelectList(db.Users, "UserId", "FirstName", orderHeader.UserId);
             ModelState.AddModelError(String.Empty, control+" Invalido");
             return View(orderHeader);
