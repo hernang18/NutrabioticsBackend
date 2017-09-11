@@ -18,7 +18,7 @@ namespace NutraBioticsBackend.Controllers
         // GET: OrderHeaders
         public ActionResult Index()
         {
-            var orderHeaders = db.OrderHeaders.Include(o => o.Contact).Include(o => o.Customer).Include(o => o.ShipTo).Include(o => o.User);
+            var orderHeaders = db.OrderHeaders.Include(o => o.Contact).Include(o => o.Customer).Include(o => o.ShipTo).Include(o => o.User).Where(o=>o.RowMod!="D").OrderByDescending(o=>o.SalesOrderHeaderId);
 
             return View(orderHeaders.ToList());
         }
@@ -427,7 +427,8 @@ namespace NutraBioticsBackend.Controllers
         public ActionResult DeleteConfirmed(int id)//
         {
             OrderHeader orderHeader = db.OrderHeaders.Find(id);
-            db.OrderHeaders.Remove(orderHeader);
+            orderHeader.RowMod="D";
+            //db.OrderHeaders.Remove(orderHeader);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
